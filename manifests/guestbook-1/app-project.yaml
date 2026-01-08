@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: guestbook-1
+  namespace: argocd
+spec:
+  description: Project for guestbook-1 application
+  sourceRepos:
+    - https://github.com/argoproj/argocd-example-apps.git
+  destinations:
+    - namespace: apps
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

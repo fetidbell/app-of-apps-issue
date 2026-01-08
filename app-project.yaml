@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: guestbook-apps
+  namespace: argocd
+spec:
+  description: Project for guestbook app-of-apps
+  sourceRepos:
+    - https://github.com/fetidbell/app-of-apps-issue.git
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: ''
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
