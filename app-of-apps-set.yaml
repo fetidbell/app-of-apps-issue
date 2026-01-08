@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: app-of-apps-set
+  namespace: argocd
+spec:
+  # goTemplate enables Go templating for more flexibility
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/fetidbell/app-of-apps-issue.git
+        revision: HEAD
+        directories:
+          - path: manifests/*
+  template:
+    metadata:
+      name: "tenant-{{ .path.basename }}"
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/fetidbell/app-of-apps-issue.git
+        targetRevision: HEAD
+        path: "{{ .path.path }}"
+        directory:
+          recurse: false
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
+          - CreateNamespace=true
