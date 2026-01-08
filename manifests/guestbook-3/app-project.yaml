@@ -8,7 +8,7 @@ spec:
   sourceRepos:
     - https://github.com/argoproj/argocd-example-apps.git
   destinations:
-    - namespace: apps
+    - namespace: guestbook-3
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: ''
