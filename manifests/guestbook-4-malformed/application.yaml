@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
   annotations:
     # MALFORMED - unquoted value starting with comma breaks YAML
-    owner: , admin@example.com
+    owner: admin@example.com
 spec:
   project: guestbook-4
   source:
